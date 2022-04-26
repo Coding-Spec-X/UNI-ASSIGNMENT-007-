@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -23,11 +23,6 @@ namespace Practical
         const int DISPLAY_WIDTH = 320;
         const int DISPLAY_HEIGHT = 460;
 
-
-        //NOTE: If the display looks wrong in your screen resolution, 
-        //please check that the picture box is 400 x 730 pixels in size
-        //and adjust the form to be slightly larger than that.
-        //Stupid Visual Studio changes the form size based on your screen resolution - gah!
         public Form1()
         {
             InitializeComponent();
@@ -36,13 +31,9 @@ namespace Practical
 
         private void drawBallsButton_Click(object sender, EventArgs e)
         {
-            //Where to draw graphics
-
+            //Draw graphics
             Graphics paper = pictureBoxDisplay.CreateGraphics();
             SolidBrush br = new SolidBrush(Color.Blue);
-
-
-
             //x position of the current ball
             int x = DISPLAY_LEFT;
             //y position of the current ball
@@ -53,19 +44,21 @@ namespace Practical
             int rowLength = (BALL_SIZE + GAP_SIZE) * ballAmount;
             //calculate column height
             int numRows = DISPLAY_HEIGHT / (BALL_SIZE + GAP_SIZE);
-            //set variable to give balls their colors
+            //Declare variable to generate random colors
             int ballColor;
             Random rand = new Random();
+            //Set try to catch errors
             try
             {
-
-
                 if (rowLength < DISPLAY_WIDTH)
                 {
-                    for (int row = 1; row <= 9; row++)
+                    //define amount of rows that can fit inside screen height
+                    for (int row = 1; row <= numRows; row++)
                     {
+                        //define amount of columns that can fit in screen width
                         for (int col = 1; col <= ballAmount; col++)
                         {
+                            //get random colors for ellipses based on the random values assigned to each color
                             for (int c = 1; c <= 10; c++)
                             {
                                 ballColor = rand.Next(1, 41);
@@ -91,46 +84,23 @@ namespace Practical
                                     br.Color = Color.Purple;
                                 }
                             }
+                            //define start location for ellipses
                             paper.FillEllipse(br, x, y, BALL_SIZE, BALL_SIZE);
+                            //move ellipses to right by ball and gap size
                             x += BALL_SIZE + GAP_SIZE;
                         }
+                        //mover ellipses down by ball and gap size
                         y += BALL_SIZE + GAP_SIZE;
+                        //start x back at starting point
                         x = DISPLAY_LEFT;
                     }
                 }
-                if (ballAmount > 6)
+                //display error if ballamount is greater then screen width and height
+                if (ballAmount >= 7)
                 {
-                    MessageBox.Show("The amount you have entered exceeds the limit");
+                    MessageBox.Show("Oh Snap! The amount you have entered exceeds the limit. Please enter an amount between 1 and 6");
                     pictureBoxDisplay.Refresh();
                 }
-
-
-
-
-
-
-
-
-
-                //br.Color = Color.FromArgb(rand.Next(0, 256), rand.Next(0, 256), rand.Next(0, 256));
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             }
             catch (Exception ex)
             {
@@ -156,20 +126,3 @@ namespace Practical
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
